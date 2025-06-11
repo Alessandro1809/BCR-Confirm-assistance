@@ -24,7 +24,7 @@
 <!-- Modal de Formulario -->
 <dialog id="modalFormulario" class="fixed inset-0 w-screen h-screen bg-black/30 backdrop-blur-sm invisible opacity-0 flex items-center justify-center z-50 transition-all duration-300 m-0 p-0">
     <article class="bg-white p-6 md:p-8 rounded-lg shadow-xl max-w-lg w-[90%] md:w-full mx-4 scale-95 opacity-0 transition-all duration-300" id="modalFormularioContent">
-        <form name="rsvp" method="POST" data-netlify="true" id="confirmacionForm" class="space-y-6" netlify>
+        <form name="rsvp" method="POST" data-netlify="true" id="confirmacionForm" class="space-y-6">
             <h3 class="text-xl md:text-2xl font-bold text-center bg-gradient-to-r from-secondary to-tertiary text-transparent bg-clip-text mb-6">
                 Por favor, completa tus datos
             </h3>
@@ -175,7 +175,7 @@
 
     // Event listener para el formulario
     if (formulario && correoError) {
-        formulario.addEventListener('submit', (e) => {
+        formulario.addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = correoInput.value;
 
@@ -184,10 +184,33 @@
                 return;
             }
 
-            correoError.classList.add('hidden');
-            cerrarModal(modalFormulario, modalFormularioContent);
-            mostrarModal(modalConfirmar, modalConfirmarContent);
-            formulario.reset();
+            try {
+                const formData = {
+                    nombreCompleto: (document.getElementById('nombreCompleto') as HTMLInputElement).value,
+                    cedula: (document.getElementById('cedula') as HTMLInputElement).value,
+                    correo: email
+                };
+
+                const response = await fetch('/api/send-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error al enviar el formulario');
+                }
+
+                correoError.classList.add('hidden');
+                cerrarModal(modalFormulario, modalFormularioContent);
+                mostrarModal(modalConfirmar, modalConfirmarContent);
+                formulario.reset();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Hubo un error al procesar tu solicitud. Por favor, intenta de nuevo.');
+            }
         });
     }
 
