@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@astrojs/netlify':
-        specifier: ^6.3.4
-        version: 6.3.4(@types/node@24.0.0)(astro@5.9.2(@netlify/blobs@8.2.0)(@types/node@24.0.0)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.42.0)(typescript@5.8.3)(yaml@2.8.0))(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.42.0)(yaml@2.8.0)
       '@astrojs/tailwind':
         specifier: ^6.0.2
         version: 6.0.2(astro@5.9.2(@netlify/blobs@8.2.0)(@types/node@24.0.0)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.42.0)(typescript@5.8.3)(yaml@2.8.0))(tailwindcss@4.1.8)
@@ -38,6 +35,10 @@ importers:
       tailwindcss:
         specifier: ^4.1.8
         version: 4.1.8
+    devDependencies:
+      '@astrojs/netlify':
+        specifier: ^6.3.4
+        version: 6.3.4(@types/node@24.0.0)(astro@5.9.2(@netlify/blobs@8.2.0)(@types/node@24.0.0)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.42.0)(typescript@5.8.3)(yaml@2.8.0))(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.42.0)(yaml@2.8.0)
 
 packages:
 
