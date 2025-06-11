@@ -1,0 +1,82 @@
+---
+import { Image } from 'astro:assets';
+import calendar from '../assets/calendar.svg';
+import BCR_Canas from '../assets/BCR_Canas.jpg';
+import ubiIcon from '../assets/ubiIcon.svg';
+import ConfirmAssistance from './ConfirmAssistance.astro';
+---
+
+<main class="container mx-auto px-4 py-8 md:py-12">
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
+        <!-- Sección de información principal -->
+        <div class="flex flex-col">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-secondary to-tertiary text-transparent bg-clip-text">
+                Te invitamos
+            </h1>
+            <div class="flex flex-col justify-center items-center mt-8 md:mt-12">
+                <time 
+                    datetime="2024-06-26T18:00" 
+                    class="text-lg sm:text-xl md:text-3xl font-bold bg-gradient-to-r from-secondary to-tertiary border border-secondary rounded-md px-4 py-6 mt-8 md:mt-12 flex items-center gap-4 text-white w-full justify-center"
+                >
+                    <span class="flex-shrink-0">
+                        <Image 
+                            src={calendar} 
+                            alt="Ícono de calendario" 
+                            width={40} 
+                            height={40}
+                            class="w-8 h-8 md:w-10 md:h-10 "
+                        />
+                    </span>
+                    Miércoles 26 de Junio a las 06:00 PM
+                </time>
+
+                <h2 class="text-lg sm:text-lg md:text-xl font-bold mt-8 md:mt-12 text-center">
+                    ¡Una noche para conectar, inspirar y compartir!
+                </h2>
+
+                <p class="text-lg sm:text-lg md:text-xl font-regular mt-8 md:mt-12 text-center leading-relaxed">
+                    El verdadero éxito no se mide solo en resultados, sino en la pasión con la que caminamos juntos hacia ellos. Sigamos avanzando con propósito, con energía, y con la certeza de que lo mejor aún está por venir.
+                </p>
+            </div>
+        </div>
+
+        <!-- Sección de imagen y branding -->
+        <div class="flex flex-col justify-start items-center mt-8 md:mt-0">
+            <figure class="flex flex-col w-full max-w-2xl">
+                <Image 
+                    src={BCR_Canas} 
+                    alt="Imagen de BCR Cañas" 
+                    width={600} 
+                    height={600}
+                    class="w-full h-auto rounded-lg shadow-lg"
+                />
+                <figcaption class="flex items-center gap-2 mt-4">
+                    <Image 
+                        src={ubiIcon} 
+                        alt="Ícono de ubicación" 
+                        width={28} 
+                        height={28}
+                        class="w-6 h-6 md:w-7 md:h-7"
+                    />
+                    <p class="text-sm md:text-lg font-regular">Filial Cañas</p>
+                </figcaption>
+            </figure>
+
+            <div class="flex flex-col text-nowrap mt-8 md:mt-4 rounded-xl p-8 sm:p-12 md:p-4 items-center md:items-center w-full">
+                <h3 class="text-xl sm:text-7xl md:text-7xl font-bold text-secondary text-center md:text-left transition-all duration-300">
+                    SOMOS EL
+                </h3>
+                <h3 class="text-xl sm:text-7xl md:text-7xl font-bold text-tertiary text-center md:text-left mt-2 transition-all duration-300">
+                    BANCO DE
+                </h3>
+                <h3 class="text-xl sm:text-7xl md:text-7xl font-bold text-tertiary text-center md:text-left mt-2 transition-all duration-300">
+                    COSTA RICA
+                </h3>
+            </div>
+        </div>
+    </section>
+
+    <section class="mt-12 md:mt-20">
+        <ConfirmAssistance />
+    </section>
+</main>
