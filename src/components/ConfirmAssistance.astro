@@ -21,6 +21,72 @@
     </div>
 </section>
 
+<!-- Modal de Formulario -->
+<dialog id="modalFormulario" class="fixed inset-0 w-screen h-screen bg-black/30 backdrop-blur-sm invisible opacity-0 flex items-center justify-center z-50 transition-all duration-300 m-0 p-0">
+    <article class="bg-white p-6 md:p-8 rounded-lg shadow-xl max-w-lg w-[90%] md:w-full mx-4 scale-95 opacity-0 transition-all duration-300" id="modalFormularioContent">
+        <form name="rsvp" method="POST" data-netlify="true" id="confirmacionForm" class="space-y-6" netlify>
+            <h3 class="text-xl md:text-2xl font-bold text-center bg-gradient-to-r from-secondary to-tertiary text-transparent bg-clip-text mb-6">
+                Por favor, completa tus datos
+            </h3>
+            
+            <div class="space-y-4">
+                <div>
+                    <label for="nombreCompleto" class="block text-sm font-medium text-gray-700 mb-1">Nombre Completo</label>
+                    <input 
+                        type="text" 
+                        id="nombreCompleto" 
+                        name="nombreCompleto" 
+                        required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-secondary focus:border-transparent"
+                        placeholder="Ingresa tu nombre completo"
+                    >
+                </div>
+
+                <div>
+                    <label for="cedula" class="block text-sm font-medium text-gray-700 mb-1">Cédula</label>
+                    <input 
+                        type="text" 
+                        id="cedula" 
+                        name="cedula" 
+                        required
+                        pattern="[0-9]{9}"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-secondary focus:border-transparent"
+                        placeholder="Ingresa tu número de cédula (9 dígitos)"
+                    >
+                </div>
+
+                <div>
+                    <label for="correo" class="block text-sm font-medium text-gray-700 mb-1">Correo Institucional</label>
+                    <input 
+                        type="email" 
+                        id="correo" 
+                        name="correo" 
+                        required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-secondary focus:border-transparent"
+                        placeholder="tucorreo@bancobcr.com"
+                    >
+                    <p id="correoError" class="text-red-500 text-sm mt-1 hidden">El correo debe terminar en @bancobcr.com</p>
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-4 mt-8">
+                <button 
+                    type="button"
+                    class="cerrarFormulario px-6 py-2 text-gray-700 hover:text-gray-900 transition-colors duration-300"
+                >
+                    Cancelar
+                </button>
+                <button 
+                    type="submit"
+                    class="bg-gradient-to-r from-secondary to-tertiary text-white px-6 py-2 rounded-md hover:opacity-90 transition-all duration-300"
+                >
+                    Continuar
+                </button>
+            </div>
+        </form>
+    </article>
+</dialog>
+
 <!-- Modal de Confirmación -->
 <dialog id="modalConfirmar" class="fixed inset-0 w-screen h-screen bg-black/30 backdrop-blur-sm invisible opacity-0 flex items-center justify-center z-50 transition-all duration-300 m-0 p-0">
     <article class="bg-white p-6 md:p-8 rounded-lg shadow-xl max-w-lg w-[90%] md:w-full mx-4 scale-95 opacity-0 transition-all duration-300" id="modalConfirmarContent">
@@ -59,17 +125,22 @@
     // Obtener referencias a los elementos
     const confirmarBtn = document.getElementById('confirmarBtn');
     const rechazarBtn = document.getElementById('rechazarBtn');
+    const modalFormulario = document.getElementById('modalFormulario');
+    const modalFormularioContent = document.getElementById('modalFormularioContent');
     const modalConfirmar = document.getElementById('modalConfirmar');
     const modalRechazar = document.getElementById('modalRechazar');
     const modalConfirmarContent = document.getElementById('modalConfirmarContent');
     const modalRechazarContent = document.getElementById('modalRechazarContent');
     const botonesModal = document.querySelectorAll('.cerrarModal');
+    const formulario = document.getElementById('confirmacionForm') as HTMLFormElement;
+    const correoInput = document.getElementById('correo') as HTMLInputElement;
+    const correoError = document.getElementById('correoError');
+    const botonCerrarFormulario = document.querySelector('.cerrarFormulario');
 
     // Función para mostrar modal
     function mostrarModal(modal: HTMLElement | null, modalContent: HTMLElement | null): void {
         if (modal && modalContent) {
             modal.classList.remove('invisible', 'opacity-0');
-            // Pequeño delay para la animación del contenido
             setTimeout(() => {
                 modalContent.classList.remove('scale-95', 'opacity-0');
             }, 150);
@@ -88,13 +159,45 @@
         }
     }
 
+    // Validar correo institucional
+    function validarCorreo(email: string): boolean {
+        return email.endsWith('@bancobcr.com');
+    }
+
     // Event listeners para los botones principales
-    if (confirmarBtn && modalConfirmar && modalConfirmarContent) {
-        confirmarBtn.addEventListener('click', () => mostrarModal(modalConfirmar, modalConfirmarContent));
+    if (confirmarBtn && modalFormulario && modalFormularioContent) {
+        confirmarBtn.addEventListener('click', () => mostrarModal(modalFormulario, modalFormularioContent));
     }
     
     if (rechazarBtn && modalRechazar && modalRechazarContent) {
         rechazarBtn.addEventListener('click', () => mostrarModal(modalRechazar, modalRechazarContent));
+    }
+
+    // Event listener para el formulario
+    if (formulario && correoError) {
+        formulario.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = correoInput.value;
+
+            if (!validarCorreo(email)) {
+                correoError.classList.remove('hidden');
+                return;
+            }
+
+            correoError.classList.add('hidden');
+            cerrarModal(modalFormulario, modalFormularioContent);
+            mostrarModal(modalConfirmar, modalConfirmarContent);
+            formulario.reset();
+        });
+    }
+
+    // Event listener para cerrar formulario
+    if (botonCerrarFormulario) {
+        botonCerrarFormulario.addEventListener('click', () => {
+            cerrarModal(modalFormulario, modalFormularioContent);
+            if (formulario) formulario.reset();
+            if (correoError) correoError.classList.add('hidden');
+        });
     }
 
     // Event listeners para cerrar los modales
@@ -107,6 +210,7 @@
 
     // Cerrar modal al hacer clic fuera
     window.addEventListener('click', (e) => {
+        if (e.target === modalFormulario) cerrarModal(modalFormulario, modalFormularioContent);
         if (e.target === modalConfirmar) cerrarModal(modalConfirmar, modalConfirmarContent);
         if (e.target === modalRechazar) cerrarModal(modalRechazar, modalRechazarContent);
     });
@@ -114,8 +218,20 @@
     // Manejar tecla Escape
     window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
+            cerrarModal(modalFormulario, modalFormularioContent);
             cerrarModal(modalConfirmar, modalConfirmarContent);
             cerrarModal(modalRechazar, modalRechazarContent);
         }
     });
+
+    // Validación en tiempo real del correo
+    if (correoInput && correoError) {
+        correoInput.addEventListener('input', () => {
+            if (correoInput.value && !validarCorreo(correoInput.value)) {
+                correoError.classList.remove('hidden');
+            } else {
+                correoError.classList.add('hidden');
+            }
+        });
+    }
 </script>
