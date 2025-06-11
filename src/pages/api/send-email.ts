@@ -89,7 +89,7 @@ export const POST: APIRoute = async ({ request }) => {
             ...commonConfig,
             to: {
                 name: 'Marjorie Jerez Lopez',
-                address: 'ashsevilla@bancobcr.com'
+                address: 'mjerez@bancobcr.com'
             },
             subject: `Nueva confirmación de asistencia - ${nombreCompleto}`,
             text: `
