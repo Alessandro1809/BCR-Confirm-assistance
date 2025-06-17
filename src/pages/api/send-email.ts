@@ -114,7 +114,7 @@ export const POST: APIRoute = async ({ request }) => {
                         </div>
                         
                         <p style="background-color: #e8f5e9; padding: 10px; border-radius: 5px; color: #2e7d32;">
-                            ✓ Esta persona ha confirmado su asistencia al evento del 26 de junio a las 6:00 PM en BCR Cañas.
+                            ✓ Esta persona ha confirmado su asistencia al evento del 02 de Julio a las 6:00 PM en BCR Cañas.
                         </p>
                         <p style="color: #333; line-height: 1.6;">
                            Fecha de registro: ${new Date().toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' })}
@@ -139,7 +139,7 @@ export const POST: APIRoute = async ({ request }) => {
             text: `
                 ¡Hola ${nombreCompleto}!
 
-                Hemos recibido tu confirmación de asistencia para el evento del 26 de junio a las 6:00 PM en BCR Cañas.
+                Hemos recibido tu confirmación de asistencia para el evento del 02 de Julio a las 6:00 PM en BCR Cañas.
 
                 Detalles de tu registro:
                 - Nombre: ${nombreCompleto}
@@ -164,7 +164,7 @@ export const POST: APIRoute = async ({ request }) => {
 
                         <div style="background-color: #e3f2fd; padding: 15px; border-radius: 5px; margin: 20px 0;">
                             <h4 style="color: #003B7E; margin-top: 0;">Detalles del Evento:</h4>
-                            <p style="margin: 5px 0;">📅 <strong>Fecha:</strong> 26 de junio</p>
+                            <p style="margin: 5px 0;">📅 <strong>Fecha:</strong> 02 de Julio</p>
                             <p style="margin: 5px 0;">⏰ <strong>Hora:</strong> 6:00 PM</p>
                             <p style="margin: 5px 0;">📍 <strong>Lugar:</strong> BCR Cañas</p>
                         </div>
